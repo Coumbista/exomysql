@@ -1,0 +1,5 @@
+afficher tous les obstacles avec leur niveau de difficulté:
+SELECT `nomobs`, `libellenivo` FROM `obstacle`,`nivo`WHERE obstacle.codenivo=nivo.codenivo;
+pour une date donnee
+SELECT `numparti` FROM `participation`INNER JOIN soldat 
+ON soldat.idsoldat= participation.idsoldat WHERE date=2018-01-01;
