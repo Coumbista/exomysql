@@ -1,0 +1,12 @@
+//afficher tous les obstacles avec leur niveau de difficulté:
+SELECT `nomobs`, `libelleniveau` FROM `obstacle`,`nivo`WHERE obstacle.codenivo=nivo.codenivo;
+//afficher pour une date donnée:
+SELECT `nomobs`, `noteminim`, `noteins`, `bonus`,noteins + bonus AS notefinale,`idins` FROM passer AS p,soldat AS sol, participation AS par, nivo as niv,obstacle AS ob, soldat AS ins WHERE sol.idsoldat=par.idsoldat && par.numparti=p.numparti && p.numobs=ob.numobs && ob.codenivo=niv.codenivo && ins.idsoldat=p.idins AND par.numparti=1 
+//les obstacles validés par un soldat:
+SELECT `nomobs`, `noteminim`, `noteins`, noteins + bonus AS notefinale,`idins` FROM passer AS p,soldat AS sol, participation AS par, nivo as niv,obstacle AS ob, soldat AS ins WHERE sol.idsoldat=par.idsoldat && par.numparti=p.numparti && p.numobs=ob.numobs && ob.codenivo=niv.codenivo && ins.idsoldat=p.idins AND par.numparti=1 AND noteins + bonus>=noteminim
+// obstacle non validés
+SELECT `nomobs`, `noteminim`, `noteins`, noteins + bonus AS notefinale,`idins` FROM passer AS p,soldat AS sol, participation AS par, nivo as niv,obstacle AS ob, soldat AS ins WHERE sol.idsoldat=par.idsoldat && par.numparti=p.numparti && p.numobs=ob.numobs && ob.codenivo=niv.codenivo && ins.idsoldat=p.idins AND par.numparti=1 AND noteins + bonus<noteminim
+//soldats qui n'ont rien validé pour une participation
+SELECT `numparti`, `nomobs`,`noteminim` ,noteins+bonus AS notefinal FROM passer AS p,soldat AS s,participation AS par,obstacle AS o,nivo AS n,soldat AS ins WHERE s.idsoldat=par.idsoldat AND ins.idsoldat=p.idins AND o.codenivo=n.codenivo AND o.numobs=p.numobs AND par.numparti=p.numpartis AND s.idsoldat=par.idsoldat  AND noteins+bonus<noteminim;
+//soldats qui ont tous validé pour une participation
+SELECT `numparti`, `nomobs`,`noteminim` ,noteins+bonus AS notefinal FROM passer AS p,soldat AS s,participation AS par,obstacle AS o,nivo AS n,soldat AS ins WHERE s.idsoldat=par.idsoldat AND ins.idsoldat=p.idins AND o.codenivo=n.codenivo AND o.numobs=p.numobs AND par.numparti=p.numpartis AND s.idsoldat=par.idsoldat  AND noteins+bonus>=noteminim;
